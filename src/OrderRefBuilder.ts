@@ -1,6 +1,6 @@
 import { Observable, of, concat, Subject, BehaviorSubject } from "rxjs";
 import { switchMap, takeUntil, take, catchError } from "rxjs/operators";
-import { IRef, IOrderRefs } from "@djonnyx/tornado-types";
+import { IRef, IOrderRefs, RefTypes } from "@djonnyx/tornado-types";
 import { IDataService } from "./IDataService";
 
 interface IProgress {
@@ -39,6 +39,10 @@ export class OrderRefBuilder {
             }
             this._refs = initialRefs;
         }
+    }
+
+    getRefVersion(refName: RefTypes): number {
+        return !!this._refsInfoDictionary && !!this._refsInfoDictionary[refName] ? this._refsInfoDictionary[refName].version || 1 : 1;
     }
 
     dispose(): void {
