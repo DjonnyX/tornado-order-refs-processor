@@ -41,6 +41,12 @@ export class OrderRefBuilder {
         }
     }
 
+    setRefVersion(refName: RefTypes, version: number): void {
+        if (!!this._refsInfoDictionary && !!this._refsInfoDictionary[refName]) {
+            this._refsInfoDictionary[refName].version = version;
+        }
+    }
+
     getRefVersion(refName: RefTypes): number {
         return !!this._refsInfoDictionary && !!this._refsInfoDictionary[refName] ? this._refsInfoDictionary[refName].version || 1 : 1;
     }

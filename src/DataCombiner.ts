@@ -1,6 +1,6 @@
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
-import { IOrderRefs, ICompiledOrderData, RefTypes } from "@djonnyx/tornado-types";
+import { ICompiledOrderData, RefTypes } from "@djonnyx/tornado-types";
 import { OrderRefBuilder } from "./OrderRefBuilder";
 import { IDependenciesRefs, OrderBuilder } from "./OrderBuilder";
 import { IDataService } from "./IDataService";
@@ -42,6 +42,12 @@ export class DataCombiner {
     }
 
     constructor(private _options: IDataCombinerOptions) { }
+
+    setRefVersion(refName: RefTypes, version: number): void {
+        if (!!this._refBuilder) {
+            this._refBuilder.setRefVersion(refName, version);
+        }
+    }
 
     getRefVersion(refName: RefTypes): number {
         return !!this._refBuilder ? this._refBuilder.getRefVersion(refName) : 1;
