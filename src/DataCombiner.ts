@@ -30,10 +30,21 @@ export class DataCombiner {
 
     private _delayer: any;
 
+    set dependenciesRefs(v: IDependenciesRefs) {
+        this._orderBuilder.dependenciesRefs = v;
+
+        this._onChange.next({
+            refs: {
+                __raw: this._orderBuilder.refs,
+                orders: this._orderBuilder.compiledOrders,
+            },
+        });
+    }
+
     constructor(private _options: IDataCombinerOptions) { }
 
-    init(storeId: string, refs?: IOrderRefs): void {
-        this._refBuilder = new OrderRefBuilder(this._options.dataService, refs);
+    init(): void {
+        this._refBuilder = new OrderRefBuilder(this._options.dataService);
         this._orderBuilder = new OrderBuilder();
 
         this._refBuilder.onChange.pipe(

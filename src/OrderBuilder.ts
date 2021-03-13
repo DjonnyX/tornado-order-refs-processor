@@ -10,6 +10,7 @@ export interface IDependenciesRefs {
 
 export class OrderBuilder {
     private _refs: IOrderRefs;
+    get refs() { return this._refs; }
 
     private _compiledOrders: Array<ICompiledOrder>;
     get compiledOrders() { return this._compiledOrders; }
@@ -53,15 +54,21 @@ export class OrderBuilder {
     }
     get currencies() { return this._currencies; }
 
-    build(refs: IOrderRefs, dependenciesRefs: IDependenciesRefs): void {
-        this.reset();
+    public set dependenciesRefs(v: IDependenciesRefs) {
+        if (!!v) {
+            this.reset();
 
-        if (!!dependenciesRefs) {
-            this.compiledProducts = dependenciesRefs.products;
-            this.compiledOrderTypes = dependenciesRefs.orderTypes;
-            this.currencies = dependenciesRefs.currencies;
+            this.compiledProducts = v.products;
+            this.compiledOrderTypes = v.orderTypes;
+            this.currencies = v.currencies;
+
+            this._refs.orders.forEach(order => {
+                this._compiledOrders.push(this.getCompiledOrder(order));
+            });
         }
+    }
 
+    build(refs: IOrderRefs, dependenciesRefs: IDependenciesRefs): void {
         this._refs = refs;
 
         if (!this._refs) {
@@ -72,9 +79,7 @@ export class OrderBuilder {
             throw Error("orders ref in not defined.");
         }
 
-        this._refs.orders.forEach(order => {
-            this._compiledOrders.push(this.getCompiledOrder(order));
-        });
+        this.dependenciesRefs = dependenciesRefs;
     }
 
     private getCompiledOrder(order: IOrder): ICompiledOrder {
@@ -115,6 +120,9 @@ export class OrderBuilder {
     }
 
     private reset(): void {
+        this._compiledOrders = undefined;
+        this._compiledProducts = undefined;
+        this._currencies = undefined;
         this._compiledOrderTypesDictionary = {};
         this._compiledProductsDictionary = {};
         this._currenciesDictionary = {};
