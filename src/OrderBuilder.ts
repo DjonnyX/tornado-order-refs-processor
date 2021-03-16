@@ -68,6 +68,15 @@ export class OrderBuilder {
         }
     }
 
+    setOrders(orders: Array<ICompiledOrder>): void {
+        if (!!this._refs) {
+            // ICompiledOrder наследуется от IOrder,
+            // поэтому не стоит приводить массив Array<ICompiledOrder> к
+            // Array<IOrder>, для экономии ресурсов
+            this._refs.orders = orders;
+        }
+    }
+
     build(refs: IOrderRefs, dependenciesRefs: IDependenciesRefs): void {
         this._refs = refs;
 
