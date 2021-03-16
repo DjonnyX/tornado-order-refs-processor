@@ -72,13 +72,26 @@ export class OrderRefBuilder {
         this._refs = null;
     }
 
+    private _refsInfo: Array<IRef>;
+
     get(): Observable<IOrderRefs | null> {
-        this._service.getRefs().pipe(
-            take(1),
-            takeUntil(this.unsubscribe$),
-        ).subscribe(res => {
-            this.checkForUpdateRefs(res);
-        });
+        try {
+            this._service.getRefs().pipe(
+                take(1),
+                takeUntil(this.unsubscribe$),
+            ).subscribe(
+                res => {
+                    this._refsInfo = res;
+                    this.checkForUpdateRefs(res);
+                },
+                err => {
+                    this.checkForUpdateRefs(this._refsInfo);
+                }
+            );
+        } catch (err) {
+            console.error(err);
+            this.checkForUpdateRefs(this._refsInfo);
+        }
 
         return this.onChange;
     }
@@ -134,12 +147,12 @@ export class OrderRefBuilder {
 
         const refs = [];
 
-        this.progressState = {...this._initialProgressState};
+        this.progressState = { ...this._initialProgressState };
         this._onProgress.next(this.progressState);
 
         concat(...sequenceList).subscribe(
             (needUpdate) => {
-                this.progressState.current ++;
+                this.progressState.current++;
                 this._onProgress.next(this.progressState);
                 refs.push(needUpdate);
             },
