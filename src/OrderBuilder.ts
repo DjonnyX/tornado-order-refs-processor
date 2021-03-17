@@ -81,11 +81,11 @@ export class OrderBuilder {
         this._refs = refs;
 
         if (!this._refs) {
-            throw Error("refs in not defined.");
+            throw Error("refs is not defined.");
         }
 
         if (!this._refs.orders) {
-            throw Error("orders ref in not defined.");
+            throw Error("orders ref is not defined.");
         }
 
         this.dependenciesRefs = dependenciesRefs;
