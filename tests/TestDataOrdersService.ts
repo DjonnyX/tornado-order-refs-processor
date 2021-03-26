@@ -15,6 +15,7 @@ export const REFS_INFO_DATA: Array<IRef> = [
 export const ORDERS_DATA: Array<IOrder> = [
     {
         id: "o1",
+        storeId: "s1",
         code: "F001",
         sum: 10000,
         discount: 1000,
@@ -34,10 +35,12 @@ export const ORDERS_DATA: Array<IOrder> = [
                 lastUpdate: currentTestDate,
             }
         ],
+        completeSortNum: -1,
         lastUpdate: currentTestDate,
     },
     {
         id: "o2",
+        storeId: "s1",
         code: "F002",
         sum: 15000,
         discount: 1500,
@@ -68,6 +71,7 @@ export const ORDERS_DATA: Array<IOrder> = [
                 lastUpdate: currentTestDate,
             }
         ],
+        completeSortNum: -1,
         lastUpdate: currentTestDate,
     }
 ];

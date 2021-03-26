@@ -96,6 +96,7 @@ export class OrderBuilder {
 
         const compiledOrder: ICompiledOrder = {
             id: order.id,
+            storeId: order.storeId,
             code: order.code,
             status: order.status,
             sum: order.sum,
@@ -105,6 +106,7 @@ export class OrderBuilder {
             orderTypeId: order.orderTypeId,
             orderType: this._compiledOrderTypesDictionary[order.orderTypeId],
             positions: compiledPositions,
+            completeSortNum: order.completeSortNum,
             lastUpdate: order.lastUpdate,
         }
 
