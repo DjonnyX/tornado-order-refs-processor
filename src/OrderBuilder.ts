@@ -96,6 +96,7 @@ export class OrderBuilder {
 
         const compiledOrder: ICompiledOrder = {
             id: order.id,
+            suffix: order.suffix,
             storeId: order.storeId,
             code: order.code,
             status: order.status,

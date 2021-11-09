@@ -15,6 +15,7 @@ export const REFS_INFO_DATA: Array<IRef> = [
 export const ORDERS_DATA: Array<IOrder> = [
     {
         id: "o1",
+        suffix: "K",
         storeId: "s1",
         code: "F001",
         sum: 10000,
@@ -40,6 +41,7 @@ export const ORDERS_DATA: Array<IOrder> = [
     },
     {
         id: "o2",
+        suffix: "K",
         storeId: "s1",
         code: "F002",
         sum: 15000,
